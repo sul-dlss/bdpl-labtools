@@ -8,7 +8,7 @@ Early scaffolding. Nothing to install or run yet.
 
 ## Layout
 
-- `tools/` – individual lab utilities (one directory per tool)
+- `tools/` – catalog of lab applications, each in its own `bdpl-labtools-<app>` repo (see [tools/README.md](tools/README.md))
 - `docs/` – procedures and notes
 
 ## License
