@@ -1,0 +1,58 @@
+name: CI
+
+# Lint + security checks on every pull request and on pushes to main.
+# Adapted from the BDPL LabKit (da-capture-macos) workflow. Steps that
+# need code skip themselves while the repo has none of that kind.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint (ruff · shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Ruff lint
+        run: |
+          files=$(git ls-files '*.py')
+          if [ -z "$files" ]; then echo "no Python files; skipping"; exit 0; fi
+          pip install --quiet ruff
+          ruff check $files
+      - name: ShellCheck
+        run: |
+          files=$(git ls-files '*.sh')
+          if [ -z "$files" ]; then echo "no shell files; skipping"; exit 0; fi
+          shellcheck $files
+
+  security:
+    name: Security (bandit · gitleaks)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read   # gitleaks-action lists the PR's commits
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # gitleaks scans commit history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bandit (Python security lint, medium+ severity)
+        run: |
+          files=$(git ls-files '*.py')
+          if [ -z "$files" ]; then echo "no Python files; skipping"; exit 0; fi
+          pip install --quiet bandit
+          bandit --severity-level medium --confidence-level medium $files
+      - name: Gitleaks (secret scan)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
