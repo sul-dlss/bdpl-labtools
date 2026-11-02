@@ -6,9 +6,13 @@ Tools for the Born-Digital Preservation Lab (BDPL) at Stanford Libraries.
 
 Early scaffolding. Nothing to install or run yet.
 
+## Start here
+
+New to the project? Read [How this project works, in five minutes](docs/how-this-project-works.md).
+
 ## Working rules
 
-Everyone building here, human or AI, works by [CLAUDE.md](CLAUDE.md). Read it first.
+Everyone building here, human or AI, works by [CLAUDE.md](CLAUDE.md).
 
 ## Layout
 
