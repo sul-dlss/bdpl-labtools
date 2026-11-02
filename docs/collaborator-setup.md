@@ -31,17 +31,39 @@ apart; they have separate accounts and sign-ins.
 
 **Signed-in check.** On a pull request page, the avatar next to
 "Add a comment" is the account GitHub thinks you are. If the green merge box
-is missing while checks are green, you are almost certainly signed in to a
-personal account without org access. Click your avatar top right, then
-**Switch account** or **Sign out**, and sign in with the Stanford account.
+is missing while checks are green and the PR says "No conflicts", nothing is
+wrong with the PR: you are signed in to a GitHub account without write
+access, usually a personal one. Fix it in the browser:
+
+1. Click your avatar in GitHub's top-right corner.
+2. Choose **Switch account** if your Stanford GitHub account is listed, or
+   **Sign out** and sign back in.
+3. Sign in with your **GitHub** username and **GitHub** password, then
+   GitHub's own two-factor prompt. Do not expect a Stanford Login page here:
+   the sul-dlss organization does not use Stanford single sign-on, and
+   github.com never redirects to login.stanford.edu.
+4. Reload the PR. The green merge box appears above "Add a comment".
+
+**If a Stanford Login page appears while you are doing this, it is not
+GitHub asking.** On 2026-11-01 it turned out to be Chrome itself: the
+"stanford.edu" Chrome profile signs in to Google through Stanford, and
+Chrome's "Verify it's you" button in the toolbar triggers that. The page
+read "Cardinal Key Required By Group Membership ... for google.com". Finish
+or dismiss it, then go back to GitHub; it has no effect on the merge.
+Keeping GitHub work in one Chrome profile avoids the confusion.
 
 ## 3. Cardinal Key
 
 Cardinal Key is a certificate Stanford installs in your Mac's keychain. On
-the Stanford Login page it replaces password plus Duo. The login page only
-offers it when your browser presents the certificate, so if you see the
-plain SUNet ID and password form, the certificate is missing or expired in
-that browser.
+the Stanford Login page it replaces password plus Duo, and some Stanford
+groups require it (the page then says "Cardinal Key Required By Group
+Membership"). It is needed for Stanford services such as Google Workspace
+and github.stanford.edu. **It is not needed for sul-dlss on github.com**,
+where you sign in with GitHub credentials only.
+
+The login page offers Cardinal Key only when your browser presents the
+certificate, so if you see the plain SUNet ID and password form, the
+certificate is missing or expired in that browser.
 
 1. In Chrome or Safari, open <https://cardinalkey.stanford.edu>.
 2. Sign in with SUNet ID, password and Duo.
@@ -148,7 +170,9 @@ gh pr create --fill
 6. Hand the PR to Michael with its link. He merges with **Squash and
    merge**; the branch is deleted automatically.
 
-To merge from the terminal rather than the website (Michael only, for now):
+To merge from the terminal rather than the website (Michael only, for now).
+This uses the `gh` sign-in from section 4 and needs no browser session, so
+it is the quickest route when the website shows no merge box:
 
 ```bash
 gh pr merge <number> --squash --delete-branch
