@@ -12,7 +12,7 @@ Everyone building here, human or AI, works by [CLAUDE.md](CLAUDE.md). Read it fi
 
 ## Layout
 
-- `tools/` – individual lab utilities (one directory per tool)
+- `tools/` – catalog of lab applications, each in its own `bdpl-labtools-<app>` repo (see [tools/README.md](tools/README.md))
 - `docs/` – procedures and notes
 
 ## License
