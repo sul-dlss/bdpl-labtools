@@ -7,6 +7,7 @@ Browse them all at https://github.com/search?q=org%3Asul-dlss+topic%3Abdpl-labto
 | Tool | Repository | Purpose | Status |
 |------|------------|---------|--------|
 | Dedupe | [bdpl-labtools-dedupe](https://github.com/sul-dlss/bdpl-labtools-dedupe) | Find duplicate files within and across accessions | Scaffolding |
+| DA Capture | [bdpl-labtools-da-capture](https://github.com/sul-dlss/bdpl-labtools-da-capture) | Media capture and ingest: imaging, read-only mount, ClamAV, Brunnhilde, BagIt; distributed to the bench as the BDPL LabKit | In production (private; transferred from mgolsonguildor/da-capture-macos 2026-11-01) |
 
 ## Adding a tool
 
