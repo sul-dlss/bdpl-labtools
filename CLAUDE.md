@@ -90,6 +90,12 @@ log the outcome in `PROGRESS.md` → move the item to `BACKLOG-done.md`.
      caught by the four-count check below and rescued by cherry-pick PRs.) If
      an addition to an open PR is truly needed, say "hold the merge — one
      more commit coming" BEFORE pushing, and wait for his acknowledgement.
+   - **An offered PR comes with its link.** When Claude tells Michael a PR
+     is ready, the message carries a direct link to the PR's GitHub page
+     (for example `https://github.com/sul-dlss/bdpl-labtools/pull/3`), with
+     its title and CI state, so he can go straight to the merge button.
+     Several PRs are listed in the order to merge them. (Michael's rule,
+     2026-11-01.)
    - **Check CI before opening a PR and again before it merges.** Run the
      linters locally and read `gh pr checks <n>` rather than assuming.
      **A red PR is not ready to merge**: say so, or fix it, but do not hand
