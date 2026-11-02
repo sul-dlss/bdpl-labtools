@@ -12,9 +12,12 @@ writes most of the code cannot approve or merge; Michael cannot approve his
 own work. GitHub enforces this for everyone, administrators included. Your
 approval is the human judgment the whole workflow is built around.
 
-A review is not a test of your coding. It asks three questions: does this
-change do what the summary says, does it do anything the summary does not
-say, and would I be comfortable if it were live in the lab tomorrow.
+A review is not a test of your coding, and it does not mean reading code.
+It asks three questions: does the description say clearly what changed and
+why, does what I can see or try match that description, and would I be
+comfortable if it were live in the lab tomorrow. Nobody on this team reads
+line-by-line diffs, and the rules are written so that nobody has to: the
+author's description must carry the whole change.
 
 ## Before you start
 
@@ -37,17 +40,26 @@ say, and would I be comfortable if it were live in the lab tomorrow.
 3. **Check the checks.** Near the bottom of the Conversation tab, a green
    check means the automated lint and security checks passed. Red means
    something failed; do not approve a red PR. Yellow means still running.
-4. **Open Files changed.** This is the actual change, file by file. Green
-   lines were added, red lines removed. Read every file. For documents, read
-   the prose as a reader would. For code, read it as a procedure: what does
-   it do, in what order, what happens if the input is wrong.
-5. **Comment on anything you want to say.** Hover a line, click the blue
-   plus sign, type, choose **Start a review**. Questions are as useful as
-   objections: "What happens if the folder is empty?" is a review comment.
-   Comments stay attached to the change forever, so they are also the
-   record of why things are the way they are.
-6. **Finish with Review changes**, the green button at the top right of
-   Files changed. Pick one:
+4. **Look at the result, not the code.** How depends on what changed:
+   - *A document.* Open **Files changed**, find the file, click the three
+     dots at its top right and choose **View file**. GitHub shows the whole
+     page as a reader will see it. Read it as that reader. Ignore the green
+     and red lines; they are for developers.
+   - *A tool or a behavior.* Read the Summary and Not verified again and ask:
+     does the description tell me what it does, in words I can act on, and
+     what was tried? If the author offers a way to try it (a link, a
+     command, a page), try it. If you cannot tell what it does from the
+     description, that is your finding: ask for a plainer description.
+   - *Settings, rules, configuration.* Read the Summary. Ask whether the
+     change matches what the team agreed.
+5. **Comment on anything you want to say.** On the Conversation tab, type
+   in the box at the bottom. Questions are as useful as objections: "What
+   happens if the folder is empty?" is a review comment. Comments stay
+   attached to the change forever, so they are also the record of why
+   things are the way they are.
+6. **Finish with Review changes.** Open **Files changed** only to find the
+   green **Review changes** button at the top right; you do not have to read
+   anything there. Pick one:
    - **Approve**: you read it, it does what it says, you would be happy for
      it to be live. The author can now merge.
    - **Request changes**: something must change before it can merge. Say
@@ -55,15 +67,18 @@ say, and would I be comfortable if it were live in the lab tomorrow.
    - **Comment**: you have remarks but are not blocking or approving. Use
      this when you are unsure and want a second reviewer.
 
-That is the whole job. A small PR takes five minutes. A large one may take
-thirty; if it would take longer, say so and ask for it to be split.
+That is the whole job. A small PR takes five minutes. One that cannot be
+understood from its description in fifteen is too big or too vaguely
+described; say so and ask for it to be split or rewritten. That request is
+a legitimate review outcome, not a failure on your part.
 
 ## What to look for
 
 | Look at | Ask |
 |---|---|
-| Summary versus diff | Does the change do more, or less, than the summary claims? |
+| The Summary | Can I say in one sentence what this change does? If not, the description is not finished. |
 | Not verified | Is anything listed there something you would want tested before it runs on real media? |
+| The rendered document or the thing itself | Does what I see or try match the Summary? |
 | Anything that touches source media or collection data | Does it only read? Our rules forbid tools from modifying sources; a person takes any action on a collection. |
 | Deletions, removals, "cleanup" | Is anything removed that something else still depends on? |
 | New dependencies or tools | Is there a reason given for each? |
