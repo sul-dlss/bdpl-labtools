@@ -46,7 +46,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def gh(*args: str, input: str | None = None) -> str:
     """Run `gh` and return stdout; raise with stderr on failure."""
     proc = subprocess.run(
-        ["gh", *args], capture_output=True, text=True, input=input
+        ["gh", *args], capture_output=True, text=True, input=input, check=False
     )
     if proc.returncode != 0:
         raise RuntimeError(f"gh {' '.join(args)} failed:\n{proc.stderr.strip()}")
@@ -172,10 +172,10 @@ def main(argv: list[str]) -> int:
 
     hub_sha = subprocess.run(
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
-        capture_output=True, text=True).stdout.strip() or "worktree"
+        capture_output=True, text=True, check=False).stdout.strip() or "worktree"
     dirty = subprocess.run(
         ["git", "-C", str(ROOT), "status", "--porcelain", "CLAUDE.md"],
-        capture_output=True, text=True).stdout.strip()
+        capture_output=True, text=True, check=False).stdout.strip()
     if args.apply and dirty:
         print("hub CLAUDE.md has uncommitted changes; commit and merge them "
               "first, then sync from main", file=sys.stderr)
