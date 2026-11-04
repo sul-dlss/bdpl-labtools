@@ -1,0 +1,57 @@
+name: Rules drift
+
+# Reusable check: does this repository's CLAUDE.md carry the hub's shared
+# rules block, byte for byte? Application repositories call it from a
+# six-line workflow (see docs/rules-propagation.md); when this file changes
+# in the hub, every caller follows on its next run. The hub is public, so
+# the comparison needs no secret.
+#
+# Red means the block has drifted. The fix is never to edit the block in the
+# app repository: it is the sync PR that tools/sync-rules.py opens from the
+# hub, which Michael merges.
+
+on:
+  workflow_call:
+    inputs:
+      hub_ref:
+        description: Hub branch or commit to compare against
+        type: string
+        default: main
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    name: Shared rules match the hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Fetch the hub's CLAUDE.md
+        env:
+          HUB_REF: ${{ inputs.hub_ref }}
+        run: |
+          curl -fsSL -o hub-CLAUDE.md \
+            "https://raw.githubusercontent.com/sul-dlss/bdpl-labtools/${HUB_REF}/CLAUDE.md"
+      - name: Compare the shared block
+        run: |
+          extract() {
+            awk '/<!-- BDPL-LABTOOLS-SHARED-RULES:BEGIN/{p=1}
+                 p{print}
+                 /<!-- BDPL-LABTOOLS-SHARED-RULES:END/{exit}' "$1"
+          }
+          extract hub-CLAUDE.md > hub-block.md
+          extract CLAUDE.md > local-block.md
+          if [ ! -s hub-block.md ]; then
+            echo "::error::the hub's CLAUDE.md has no shared-rules markers"; exit 1
+          fi
+          if [ ! -s local-block.md ]; then
+            echo "::error::CLAUDE.md has no shared-rules markers — this repository is not enrolled (docs/rules-propagation.md in the hub)"; exit 1
+          fi
+          if diff -u local-block.md hub-block.md; then
+            echo "shared rules block matches the hub"
+          else
+            echo "::error::the shared rules block has drifted from the hub. Do not edit it here: merge the sync PR opened from sul-dlss/bdpl-labtools (tools/sync-rules.py --apply)."
+            exit 1
+          fi
