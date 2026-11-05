@@ -34,16 +34,21 @@ these rules) and nothing that runs on the bench.
 
 ## Who merges — the current phase
 
-**Until collaborators are added, Michael Olson (GitHub `mgolson-stanford`)
-merges every pull request, including his own.** GitHub's "Protect main"
-ruleset already requires a pull request for every change and blocks direct
-pushes, force pushes and deletions for everyone, admins included; the
-required-approval count is zero for this phase only.
+**Michael Olson (GitHub `mgolson-stanford`) merges every pull request,
+including his own. Claude never approves and never merges.** GitHub's
+"Protect main" ruleset requires a pull request for every change and blocks
+direct pushes, force pushes and deletions for everyone, admins included.
+Since 2026-11-04 the required-approval count is zero and code-owner review
+is off: Michael is the only code owner, GitHub does not let an author
+approve their own pull request, and with one approval required every PR he
+authored was blocked (pull requests #10 to #14 were, on 2026-11-04). The
+solo phase therefore continues until a second code owner exists.
 
-**When the first collaborator is added**, the same day: raise the required
-approvals to one, turn on code-owner review and last-push approval in the
-ruleset, and change the sentence above. From then on nothing reaches `main`
-without Michael's explicit approval on the PR.
+**When a second code owner is named** (a collaborator with write access,
+listed in `CODEOWNERS`), the same day: raise the required approvals to one,
+turn code-owner review and last-push approval back on, and change the
+paragraph above. From then on nothing reaches `main` without an approval
+from a code owner other than the author.
 
 <!-- BDPL-LABTOOLS-SHARED-RULES:BEGIN — shared by every repository in the family. Source: sul-dlss/bdpl-labtools CLAUDE.md. In an app repository, do not edit between these markers; change the hub and run tools/sync-rules.py. -->
 
