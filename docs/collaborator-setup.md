@@ -167,8 +167,10 @@ gh pr create --fill
 ```
 
 5. Wait for CI (lint and security checks) to go green. Fix anything red.
-6. Hand the PR to Michael with its link. He merges with **Squash and
-   merge**; the branch is deleted automatically.
+6. Hand the PR to a colleague for review with its link; see
+   [reviewing-pull-requests.md](reviewing-pull-requests.md). Once approved,
+   the author merges with **Squash and merge**; the branch is deleted
+   automatically.
 
 To merge from the terminal rather than the website (Michael only, for now).
 This uses the `gh` sign-in from section 4 and needs no browser session, so
