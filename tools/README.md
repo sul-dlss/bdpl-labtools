@@ -11,6 +11,7 @@ Browse them all at https://github.com/search?q=org%3Asul-dlss+topic%3Abdpl-labto
 
 ## Adding a tool
 
-1. Create `sul-dlss/bdpl-labtools-<app>` with the Apache-2.0 license and `.gitignore` from this repo.
+1. Create `sul-dlss/bdpl-labtools-<app>` from this repository's template ("Use this template" on GitHub; the hub has been a template repository since 2026-11-03). In the new repo's first PR, delete what belongs only to the hub (`tools/README.md`, `docs/open-source-release.md`, `tools/sync-rules.py`) and rewrite `CLAUDE.md`'s introduction, "What this project is" and "Who merges" for the app — leaving the shared block between the markers untouched.
 2. Add the `bdpl-labtools` and `digital-preservation` topics to the repo.
-3. Add a row to the table above.
+3. Add a row to the table above. The row's link is what `tools/sync-rules.py` reads, so the repository receives rule updates from this step on.
+4. Add the "Rules drift" caller workflow (`docs/rules-propagation.md`, "Enrolling a repository").
