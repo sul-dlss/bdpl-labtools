@@ -4,8 +4,19 @@ This file holds the working rules for the BDPL LabTools family. It is loaded
 automatically at the start of every Claude session in this repository, and it
 is written for people too: a new contributor, human or AI, should be able to
 read it and work the way the lab works. **When a working rule changes, update
-this file.** Application repositories (`bdpl-labtools-<app>`) copy this file
-and add their own app-specific sections below the rules.
+this file.** Application repositories (`bdpl-labtools-<app>`) carry the same
+rules and add their own app-specific sections below them.
+
+**The shared rules are one block, and this copy is the source of truth.**
+The block sits between two marker lines (`BDPL-LABTOOLS-SHARED-RULES:BEGIN`
+and `:END`) and is byte-identical in every repository of the family. A rule
+changes here first, by pull request; then `python3 tools/sync-rules.py
+--apply` opens one pull request per application repository carrying the new
+block, and Michael merges each. A repository whose block has drifted from
+the hub's shows a red "Rules drift" check until its sync PR merges. Never
+edit between the markers in an app repository: the next sync overwrites it.
+Everything outside the markers is that repository's own. See
+`docs/rules-propagation.md`.
 
 These rules were carried over from the BDPL LabKit (`da-capture-macos`),
 where each one was learned the hard way. The dates and incident notes are
@@ -35,6 +46,8 @@ approval first.
 
 The solo phase (2026-11-01, zero required approvals while the scaffolding
 PRs landed) is over. Claude never approves and never merges.
+
+<!-- BDPL-LABTOOLS-SHARED-RULES:BEGIN — shared by every repository in the family. Source: sul-dlss/bdpl-labtools CLAUDE.md. In an app repository, do not edit between these markers; change the hub and run tools/sync-rules.py. -->
 
 ## Project-management files (keep these current)
 
@@ -79,15 +92,22 @@ log the outcome in `PROGRESS.md` → move the item to `BACKLOG-done.md`.
    vocabularies, verbatim. **Every pull request runs the `docs-steward`
    agent before it is offered** (`.claude/agents/docs-steward.md`): it
    reads the diff, fixes the documents the change makes stale on the same
-   branch, keeps `docs/README.md` and the catalog honest, and writes its
-   report into the PR body under "Docs steward". A PR offered without that
-   section is not ready. (Michael's rule, 2026-11-01.)
+   branch, keeps `docs/README.md` (and, in the hub, the catalog) honest, and
+   writes its report into the PR body under "Docs steward". A PR offered
+   without that section is not ready. (Michael's rule, 2026-11-01.)
 7. **Git workflow (mandatory — no exceptions).**
    - **Never commit or push directly to `main`.** All work happens on a
      branch (`feat/…`, `fix/…`, `docs/…`).
    - Changes reach `main` **only via a pull request** on GitHub.
    - Every PR is merged by Michael (see *Who merges*). Claude never merges,
      and never treats silence as approval.
+   - **Claude never closes a pull request or an issue**, not a superseded
+     one, not a stale one, not a duplicate. Closing is a disposition act and
+     is Michael's, exactly like merging. A superseded PR stays open, gets a
+     comment naming its replacement, and its own line in the list handed to
+     Michael: "superseded by #N; close it if you agree." (Michael's rule,
+     2026-11-03: two rebuilt PRs were closed as housekeeping and he found
+     them gone when he went to merge.)
    - **Do not circumvent this rule**: not to save time, not because a change
      seems trivial, not for any reason. No direct pushes, no force-pushes to
      `main`, no admin overrides, no self-merges by Claude. If the workflow
@@ -154,3 +174,15 @@ updates; private vulnerability reporting; read-only workflow tokens; CI
 running ruff, shellcheck, bandit and gitleaks on every PR; the "Protect
 main" ruleset. New `bdpl-labtools-<app>` repositories get the same set on
 creation. See `SECURITY.md` and `CONTRIBUTING.md`.
+
+<!-- BDPL-LABTOOLS-SHARED-RULES:END -->
+
+## Hub-specific
+
+- This repository holds nothing that runs on the bench. The catalog is
+  `tools/README.md`; a new application gets its row there, in the PR that
+  creates the repository.
+- `tools/sync-rules.py` runs from a checkout of this repository, on `main`,
+  after a rules change has merged. It reads the application repositories
+  from the catalog table. It opens pull requests and nothing else: it never
+  merges, never closes, never pushes to `main` anywhere.
