@@ -231,6 +231,7 @@ gh repo edit sul-dlss/bdpl-labtools-<app> --add-topic bdpl-labtools --add-topic 
 |------|----------|
 | Hub repository | <https://github.com/sul-dlss/bdpl-labtools> |
 | Working rules | [`CLAUDE.md`](../CLAUDE.md) |
+| Working with the AI assistant | [`docs/working-with-claude.md`](working-with-claude.md) |
 | Contributing guide | [`CONTRIBUTING.md`](../CONTRIBUTING.md) |
 | Security policy | [`SECURITY.md`](../SECURITY.md) |
 | Application catalog | [`tools/README.md`](../tools/README.md) |

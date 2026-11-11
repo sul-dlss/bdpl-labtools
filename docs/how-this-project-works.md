@@ -99,8 +99,10 @@ all.
 2. [Reviewing a pull request](reviewing-pull-requests.md): the one skill the
    team needs first, in six steps.
 3. [CLAUDE.md](../CLAUDE.md): the full working rules.
-4. [Tool catalog](../tools/README.md): what exists and what is planned.
-5. The Dedupe repository's `docs/research/`: the research behind the first
+4. [Working with Claude](working-with-claude.md): what the assistant never
+   does, how a session and a Claude pull request go, how to steer it.
+5. [Tool catalog](../tools/README.md): what exists and what is planned.
+6. The Dedupe repository's `docs/research/`: the research behind the first
    tool, if you want to see what the assistant produces and a person
    reviews.
 
